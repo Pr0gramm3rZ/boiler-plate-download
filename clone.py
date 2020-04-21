@@ -9,6 +9,14 @@ load_dotenv()
 gitToken = os.getenv("GIT_TOKEN")
 gitUsername = os.getenv("GIT_USERNAME")
 
+
+def getBoiler(i):
+    switcher = {
+        'react-native': 'react-redux-bolier-plate'
+    }
+    return switcher.get(i, "No boiler plate")
+
+
 if len(os.listdir('.')) == 0:
     if len(sys.argv) < 3:
         print("No arguments")
@@ -25,9 +33,28 @@ if len(os.listdir('.')) == 0:
         resp = requests.post(
             'https://api.github.com/user/repos', json=command, auth=(gitUsername, gitToken))
 
-        y = json.loads(resp.text)
+        boilerName = getBoiler(boilerplate)
 
-        print(resp.json()["clone_url"])
+        os.system("git clone https://github.com/Pr0gramm3rZ/" +
+                  boilerName + ".git .")
+
+        os.system("git remote set-url origin " + resp.json()["clone_url"])
+
+        os.system('git push -u origin master')
+
+        with open("package.json", "r") as jsonFile:
+            data = json.load(jsonFile)
+
+        data["name"] = projectName
+
+        with open("package.json", "w") as jsonFile:
+            json.dump(data, jsonFile)
+
+        os.system('git add *')
+
+        os.system('git commit -m "Name Updated"')
+
+        os.system('git push -u origin master')
 
 else:
     print("Directory is not empty")
