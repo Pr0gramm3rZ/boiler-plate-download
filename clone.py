@@ -56,5 +56,9 @@ if len(os.listdir('.')) == 0:
 
         os.system('git push -u origin master')
 
+        os.system("npm install")
+
+        os.system("code .")
+
 else:
     print("Directory is not empty")
