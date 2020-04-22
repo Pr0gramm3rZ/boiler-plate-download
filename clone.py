@@ -12,7 +12,8 @@ gitUsername = os.getenv("GIT_USERNAME")
 
 def getBoiler(i):
     switcher = {
-        'react-native': 'react-redux-bolier-plate'
+        'react-native': 'react-redux-bolier-plate',
+        'express-sql': 'express-sql-boiler-plate'
     }
     return switcher.get(i, "No boiler plate")
 
